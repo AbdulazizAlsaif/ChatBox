@@ -20,9 +20,11 @@ export default function ChatContainer(props) {
       </div>
       </div>
     
-    <div className="column col-md-3 d-none d-md-block ">
+    <div className="column col-md-3  d-none d-md-block ">
       <div className="col-md-6">
-      <p className=" ">Room : {props.room}</p>
+      <p className="display-8">Room:{props.room}  
+      </p>
+      
       </div>
     </div>
         {props.children}

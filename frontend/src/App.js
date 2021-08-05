@@ -2,7 +2,7 @@ import './App.css';
 import './compenents/login'
 import Login from './compenents/login';
 import Chat from './compenents/Chat';
-import {useState , useEffect} from 'react';
+import {useState } from 'react';
 import Nav from './compenents/Nav';
 
 function App() {

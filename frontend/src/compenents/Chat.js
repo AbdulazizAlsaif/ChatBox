@@ -14,26 +14,30 @@ export default function Chat(props) {
 
   const [messages,setMessages]=useState([{user:"ChatBot",msg:"Welcome to chat box " + props.name}])
   const socketRef = useRef(null);
+  
+   
  
-
   
  
 
-    useEffect(async()=>{
+    useEffect(()=>{
       if (socketRef.current == null) {
         socketRef.current = io("http://localhost:8000");
       
         
       }
-
-      await axios.post("http://localhost:8000/messages",{room: props.room}
-      )
-      .then(res => { 
-          console.log(messages)
-          res.data.map((item)=>setMessages(oldMessage =>[item,...oldMessage]))
-          
-          console.log(res.data)
-        })
+      async function getData(){
+        await axios.post("http://localhost:8000/messages",{room: props.room}
+        )
+        .then(res => { 
+            console.log(messages)
+            res.data.map((item)=>setMessages(oldMessage =>[item,...oldMessage]))
+            
+            console.log(res.data)
+          })
+      }
+      getData()
+    
 
       const {current: socket} = socketRef;
         socket.open()
@@ -44,6 +48,7 @@ export default function Chat(props) {
 
         socket.on("message", msg=>{
           setMessages(oldMessage =>[...oldMessage,msg])
+          
          
         })
 
@@ -66,8 +71,8 @@ export default function Chat(props) {
      <ChatContainer room={props.room}>
        <ChatBox>
         
-         { messages.map((item,index)=>item.user? <MessageCard key={index} message={item}/> :"")}
-         {console.log(messages)}
+         { messages.map((item,index)=>index==messages.length-1? <MessageCard  key={index} message={item}/> :<MessageCard  key={index} message={item}/> )}
+        
        </ChatBox>
     <SendMessage sendMessage={message} name={props.name} room={props.room}/>
     </ChatContainer>
